@@ -1,6 +1,6 @@
-athleisure
-casual
-classic
-relaxed
-romantic
-formal
+athleisure: Clothing that is comfortable and suitable for both athletic activity and everyday casual wear (e.g. leggings, joggers, sneakers)
+casual: Comfortable, informal clothing suitable for everyday wear (e.g. jeans, simple t-shirts, graphic t-shirts, zip-ups, hoodies)
+classic: Basics and simple, solid colored clothing (e.g. plain neutral-colored t-shirts and pants)
+relaxed: Comfortable, loose-fitting, and effortless in appearance; less structured than casual (e.g. hoodies, sweatpants, sweatshirts, sweaters, oversized clothing)
+romantic: Flowing, soft, often feminine styles incorporating elements like ruffles, lace, floral prints, soft fabrics, and pastel colors (e.g. floral patterns, pastel tops and bottoms)
+formal: Clothing suitable for official, ceremonial, or high-end social events with a professional look (e.g. ties, black-tie, collared shirts, suits, dress tops and pants, simple pencil skirts)
