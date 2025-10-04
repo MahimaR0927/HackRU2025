@@ -36,4 +36,6 @@ def generate_tags(image_path):
   with open("./resources/temp_tags.txt", "w") as f:
     f.write("\n".join(tag_matches))
 
+
+
 generate_tags(image_path)
