@@ -10,8 +10,21 @@ def index():
 @app.route("/wardrobe", methods=['GET', 'POST'])
 
 def wardrobe():
-    return render_template("src/wardrobe.html")
+    imgs = []
+    error = ""
+
+    try:
+        if request.method == "POST":
+            img_path = request.form.get("clothing-file").strip()
+            new_tags = main.generate_tags(img_path)
+            imgs.append({img_path, new_tags})
+
+    except Exception as e:
+        error = "Error:" + str(e)
+        imgs = []
+
+    return render_template("src/wardrobe.html", imgs = imgs)
 
 
-def addTags(image_path):
-    return main.generate_tags(image_path)
+
+    
