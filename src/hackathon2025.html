@@ -13,87 +13,95 @@
 <label for="clothing">Choose image(s) to add</label>
 <input type="file" id="clothing" accept="image/*" multiple>
 
-<label for="fit"> Enter a tag for clothing</label> 
-<input type="text" id="fit" placeholder="Pick a style">
-
-<div id="previewContainer">
-    <span id="tagDisplay"></span>
-</div>
+<div id="previewContainer" style="display: flex; flex-wrap: wrap;">
+    </div>
 
 <script>
-// 1. Array to store all accumulated files
-let allFiles = [];
+// 1. Array to store objects: { file: FileObject, tag: "tag text" }
+let allItems = [];
 
 function showClothing() {
     const fileInput = document.getElementById('clothing');
-    const tagInput = document.getElementById("fit");
-    const previewContainer = document.getElementById("previewContainer");
     
     // Get the newly selected files
     const newFiles = fileInput.files;
 
-    // 2. Add new files to the master array
+    if (newFiles.length === 0) return;
+
+    // Process each new file
     for (let i = 0; i < newFiles.length; i++) {
-        allFiles.push(newFiles[i]);
+        const file = newFiles[i];
+        
+        // 2. Prompt the user for a tag for this specific image
+        const tag = prompt(`Enter a tag for the image: ${file.name}`, 'casual');
+        
+        // If the user cancels the prompt, skip this file
+        if (tag === null) continue;
+
+        // 3. Store the file and its tag as a single item in the master array
+        allItems.push({
+            file: file,
+            tag: tag || 'No Tag' // Use 'No Tag' if the user leaves the input empty
+        });
     }
     
-    // Clear the file input's value so the 'change' event fires again 
-    // even if the user selects the same files.
+    // Clear the file input's value
     fileInput.value = ''; 
 
-    // 3. Redraw the entire preview container based on the 'allFiles' array
-    redrawPreviews(tagInput.value);
+    // 4. Redraw the entire preview container based on the 'allItems' array
+    redrawPreviews();
 }
 
-function redrawPreviews(tagValue) {
+function redrawPreviews() {
     const previewContainer = document.getElementById("previewContainer");
     
     // Clear previous previews entirely
     previewContainer.innerHTML = ''; 
 
-    // Display the single tag at the top of the container
-    const tagSpan = document.createElement('span');
-    tagSpan.id = "tagDisplay";
-    tagSpan.innerText = "Tag: " + tagValue;
-    previewContainer.appendChild(tagSpan);
-    
-    // Only add a line break if there are files to show
-    if (allFiles.length > 0) {
-        previewContainer.appendChild(document.createElement('br'));
-    }
-    
-    // Loop through ALL accumulated files
-    for (let i = 0; i < allFiles.length; i++) {
-        const file = allFiles[i];
+    // Loop through ALL accumulated items (file + tag)
+    allItems.forEach(item => {
+        const file = item.file;
+        const tag = item.tag;
+
+        // Create a container for the image and its tag to keep them together
+        const itemWrapper = document.createElement('div');
+        itemWrapper.style.margin = '10px';
+        itemWrapper.style.textAlign = 'center';
         
-        // Use a FileReader to read each file
+        // Use a FileReader to read the file
         const reader = new FileReader();
         reader.onload = function(e) {
-            // Create a new image element for each file
+            // Create the image element
             const newImage = document.createElement('img');
             newImage.src = e.target.result;
             newImage.width = 300;
             newImage.height = 300;
-            newImage.style.marginRight = "10px";
-            newImage.style.marginBottom = "10px";
+            newImage.style.display = 'block';
 
-            // Append the new image to the container
-            previewContainer.appendChild(newImage);
+            // Create the tag element
+            const tagElement = document.createElement('span');
+            tagElement.innerText = "Tag: " + tag;
+            tagElement.style.fontWeight = 'bold';
+            tagElement.style.display = 'block'; // Make sure the tag is on its own line
+
+            // Assemble the wrapper: Image on top, Tag on bottom
+            itemWrapper.appendChild(newImage);
+            itemWrapper.appendChild(tagElement);
+            
+            // Append the whole item (image + tag) to the main container
+            previewContainer.appendChild(itemWrapper);
         }
 
         reader.readAsDataURL(file);
-    }
+    });
 }
 
 
 // Attach the function to the 'change' event on the file input
 document.getElementById('clothing').addEventListener('change', showClothing);
 
-// Update tag display immediately when user types in the input
-// This will trigger a full redraw to update the tag text
-document.getElementById('fit').addEventListener('input', function() {
-    redrawPreviews(this.value);
-});
+// Since the tag is now set when the image is chosen, 
+// there is no need for a separate listener on the old tag input.
 </script>
 
 </body>
