@@ -12,11 +12,10 @@
 
         /* Menu Board Styling */
         .menu-board {
-            /* Clean border removed, now a simple separation line */
-            border-bottom: 2px solid #5C1E7E; /* A subtle, colored line for separation */
+            border-bottom: 2px solid #5C1E7E; 
             padding: 10px 20px;
             margin-bottom: 30px;
-            background-color: #f8f8f8; /* Light background for the menu area */
+            background-color: #f8f8f8; 
         }
 
         /* Navigation List Styling */
@@ -24,21 +23,14 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            display: flex; /* Make the list items appear in a row */
-            gap: 20px; /* Space between the links */
-        }
-
-        /* Navigation List Item Styling */
-        .menu-board nav ul li {
-            border: none; /* Remove the old, blocky border */
-            padding: 0;
-            width: auto; /* Allow the width to adjust to content */
+            display: flex; 
+            gap: 20px; 
         }
 
         /* Link Styling */
         .menu-board nav ul li a {
-            text-decoration: none; /* Remove the default underline */
-            color: #5C1E7E; /* Deep purple color for links */
+            text-decoration: none;
+            color: #5C1E7E; 
             font-weight: bold;
             padding: 5px 10px;
             transition: color 0.3s;
@@ -46,17 +38,32 @@
         
         /* Link Hover Effect */
         .menu-board nav ul li a:hover {
-            color: #8A4AC7; /* Lighter color on hover */
+            color: #8A4AC7; 
             text-decoration: underline;
         }
+        
+        /* --- REMOVED OLD STYLES ---
+           h1, p {
+               margin-left: 20px; 
+           }
+        */
 
-        /* Content Styling */
-        h1, p {
-            margin-left: 20px;
+        /* Content Container Styling (NEW) */
+        /* This applies a left margin to all content inside it */
+        .content-container {
+            margin-left: 50px; /* Consistently moves all content 50px from the left */
+            max-width: 900px; /* Optional: keeps the text width manageable */
         }
-
+        
+        /* Adjusting existing p max-width */
         p {
             max-width: 600px;
+            line-height: 1.6; /* Improves readability */
+        }
+
+        /* Adjusting h3 spacing */
+        h3 {
+            margin-top: 30px;
         }
     </style>
 </head>
@@ -75,37 +82,25 @@
         </nav>
     </div>
     
-    <h1>Product Name</h1>
-    
-    <h3>About Us</h3>
+    <div class="content-container"> 
 
-    <p>
-        Our names are Hannah, Shreya, Mahima, Rishita. We are
-sophmores. We have backgrounds in computer science,
-        data science, computer engineering, and information technology
-& informatics.
-    </p>
+        <h1>Product Name</h1>
+        
+        <h3>About Us</h3>
 
-    <h3>Our Mission Statement</h3>
+        <p>
+            Our names are Hannah, Shreya, Mahima, Rishita. We are sophomores. We have backgrounds in computer science, data science, computer engineering, and information technology & informatics.
+        </p>
 
-    <p>
-        We want to relieve the stress faced by high school and college
-students in picking their outfits for school.
-        Have you ever had a day where you are just in a rush and grab
-the most random clothes that do not go together at all,
-        or just had outfit options you loved but forgot about them.
-        Well, this app lets you upload pictures of all your clothing
-and autogenerates outfits based on the type of fit you want,
-        such as athletic, casual, relaxed, etc. It also lets you see
-all your clothes in one place, as well as wardrobes.
+        <h3>Our Mission Statement</h3>
 
-    </p>
+        <p>
+            We want to relieve the stress faced by high school and college students in picking their outfits for school. Have you ever had a day where you are just in a rush and grab the most random clothes that do not go together at all, or just had outfit options you loved but forgot about them. Well, this app lets you upload pictures of all your clothing and autogenerates outfits based on the type of fit you want, such as athletic, casual, relaxed, etc. It also lets you see all your clothes in one place, as well as wardrobes.
+        </p>
 
-    <p style="max-width: 600px; margin: 0;">
-        This app lets you update photos of all your clothings and
-        the AI system will choose your outfit for the day based on what
-        fit you are going for (athletic, professional, casual, fancy).
-    </p> 
-    
-</body>
+        <p>
+            This app lets you update photos of all your clothings and the AI system will choose your outfit for the day based on what fit you are going for (athletic, professional, casual, fancy).
+        </p> 
+
+    </div> </body>
 </html>
