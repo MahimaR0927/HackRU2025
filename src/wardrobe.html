@@ -1,123 +1,169 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Product Name - My Wardrobe</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-<style>
-    /* ADDED: A new CSS class for the images */
-    .clothing-preview {
-        border: 2px solid #000000; /* 2-pixel solid dark black border */
-        border-radius: 5px;     /* Slightly rounded corners */
-        padding: 5px;           /* Small space between image and border */
-    }
-</style>
+        /* Menu Board Styling (Same as homepage.html) */
+        .menu-board {
+            border-bottom: 2px solid #5C1E7E;
+            padding: 10px 20px;
+            margin-bottom: 30px;
+            background-color: #f8f8f8;
+        }
+
+        .menu-board nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .menu-board nav ul li {
+            border: none;
+            padding: 0;
+            width: auto;
+        }
+
+        .menu-board nav ul li a {
+            text-decoration: none;
+            color: #5C1E7E;
+            font-weight: bold;
+            padding: 5px 10px;
+            transition: color 0.3s;
+        }
+        
+        .menu-board nav ul li a:hover {
+            color: #8A4AC7;
+            text-decoration: underline;
+        }
+
+        /* Wardrobe Page Specific Styling */
+        .content-container {
+            padding: 0 20px; /* Add some padding to the main content */
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        /* Input/Button area styling */
+        .input-area {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .clothing-preview {
+            border: 2px solid #ddd; /* Lighter border for a softer look */
+            border-radius: 8px;     /* More rounded corners */
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+        }
+    </style>
+</head>
 
 <body>
 
-    <div class="menu-board" style="border: 1px solid #000; padding: 20px; width: 100%; margin: 20px 0;">
-        
+    <div class="menu-board">
         <nav>
-            <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="border: 1px solid #ccc; padding: 5px; width: 200px;"> 
-                    <a href="homepage.html">Homepage</a>
+            <ul>
+                <li> 
+                    <a href="homepage.html">Home</a>
+                </li>
+                <li> 
+                    <a href="wardrobe.html">My Wardrobe</a>
                 </li>
             </ul>
         </nav>
-        
     </div>
 
-<h1> Product Name </h1>
+    <div class="content-container">
 
-<p> 
-    This app lets you update photos of all your clothings and
-    the AI system will choose your outfit for the day based on what 
-    fit you are going for (athletic, professional, casual, fancy)
-</p> 
+        <h2>Add Items to Wardrobe</h2>
 
-<label for="clothing">Choose image(s) to add</label>
-<input type="file" id="clothing" accept="image/*" multiple>
+        <div class="input-area">
+            <label for="clothing" style="font-weight: bold;">Choose image(s) to add:</label>
+            <input type="file" id="clothing" accept="image/*" multiple>
+        </div>
 
-<div id="previewContainer" style="display: flex; flex-wrap: wrap;">
+        <h3>Your Items:</h3>
+        <div id="previewContainer" style="display: flex; flex-wrap: wrap; gap: 20px;">
+        </div>
+
     </div>
 
 <script>
-// 1. Array to store objects: { file: FileObject, tag: "tag text" }
+// ... (The JavaScript code remains the same, but it's not shown here for brevity) ...
 let allItems = [];
 let allTags = [];
 
 function showClothing() {
     const fileInput = document.getElementById('clothing');
-    
-    // Get the newly selected files
     const newImages = fileInput.files;
 
     if (newImages.length === 0) return;
 
-    // Process each new file
     for (let i = 0; i < newImages.length; i++) {
         const file = newImages[i];
-        
-        // 2. Prompt the user for a tag for this specific image
         const tag = prompt(`Enter a tag for the image: ${file.name}`, 'casual');
         
-        // If the user cancels the prompt, skip this file
         if (tag === null) 
             continue;
 
         const cleanTag = tag.trim() || 'No Tag';
 
-        // 3. Store the file and its tag as a single item in the master array
         allItems.push({
             file: file,
-            tag: cleanTag // Use 'No Tag' if the user leaves the input empty
+            tag: cleanTag
         });
 
         allTags.push(cleanTag);
     }
     
-    // Clear the file input's value
     fileInput.value = ''; 
-
-    // 4. Redraw the entire preview container based on the 'allItems' array
     redrawPreviews();
 }
 
 function redrawPreviews() {
     const previewContainer = document.getElementById("previewContainer");
     
-    // Clear previous previews entirely
     previewContainer.innerHTML = ''; 
 
-    // Loop through ALL accumulated items (file + tag)
     allItems.forEach(item => {
         const file = item.file;
         const tag = item.tag;
 
-        // Create a container for the image and its tag to keep them together
         const itemWrapper = document.createElement('div');
-        itemWrapper.style.margin = '10px';
         itemWrapper.style.textAlign = 'center';
         
-        // Use a FileReader to read the file
         const reader = new FileReader();
         reader.onload = function(e) {
-            // Create the image element
             const newImage = document.createElement('img');
             newImage.src = e.target.result;
-            newImage.width = 300;
-            newImage.height = 300;
+            newImage.width = 150; /* Reduced image size for a cleaner look */
+            newImage.height = 150;
+            newImage.style.objectFit = 'cover'; /* Ensures images fill the space nicely */
             newImage.style.display = 'block';
             newImage.className = 'clothing-preview';
 
-            // Create the tag element
             const tagElement = document.createElement('span');
             tagElement.innerText = "Tag: " + tag;
             tagElement.style.fontWeight = 'bold';
-            tagElement.style.display = 'block'; // Make sure the tag is on its own line
+            tagElement.style.display = 'block';
+            tagElement.style.marginTop = '5px'; /* Space between image and tag */
 
-            // Assemble the wrapper: Image on top, Tag on bottom
             itemWrapper.appendChild(newImage);
             itemWrapper.appendChild(tagElement);
             
-            // Append the whole item (image + tag) to the main container
             previewContainer.appendChild(itemWrapper);
         }
 
@@ -125,12 +171,7 @@ function redrawPreviews() {
     });
 }
 
-
-// Attach the function to the 'change' event on the file input
 document.getElementById('clothing').addEventListener('change', showClothing);
-
-// Since the tag is now set when the image is chosen, 
-// there is no need for a separate listener on the old tag input.
 </script>
 
 </body>

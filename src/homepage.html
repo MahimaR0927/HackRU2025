@@ -2,19 +2,77 @@
 <html>
 <head>
     <title>Product Name - Home</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Menu Board Styling */
+        .menu-board {
+            /* Clean border removed, now a simple separation line */
+            border-bottom: 2px solid #5C1E7E; /* A subtle, colored line for separation */
+            padding: 10px 20px;
+            margin-bottom: 30px;
+            background-color: #f8f8f8; /* Light background for the menu area */
+        }
+
+        /* Navigation List Styling */
+        .menu-board nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex; /* Make the list items appear in a row */
+            gap: 20px; /* Space between the links */
+        }
+
+        /* Navigation List Item Styling */
+        .menu-board nav ul li {
+            border: none; /* Remove the old, blocky border */
+            padding: 0;
+            width: auto; /* Allow the width to adjust to content */
+        }
+
+        /* Link Styling */
+        .menu-board nav ul li a {
+            text-decoration: none; /* Remove the default underline */
+            color: #5C1E7E; /* Deep purple color for links */
+            font-weight: bold;
+            padding: 5px 10px;
+            transition: color 0.3s;
+        }
+        
+        /* Link Hover Effect */
+        .menu-board nav ul li a:hover {
+            color: #8A4AC7; /* Lighter color on hover */
+            text-decoration: underline;
+        }
+
+        /* Content Styling */
+        h1, p {
+            margin-left: 20px;
+        }
+
+        p {
+            max-width: 600px;
+        }
+    </style>
 </head>
 <body>
     
-    <div class="menu-board" style="border: 1px solid #000; padding: 20px; width: 100%; margin: 20px 0;">
-        
+    <div class="menu-board">
         <nav>
-            <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="border: 1px solid #ccc; padding: 5px; width: 200px;"> 
+            <ul>
+                <li> 
+                    <a href="homepage.html">Home</a>
+                </li>
+                <li> 
                     <a href="wardrobe.html">My Wardrobe</a>
                 </li>
             </ul>
         </nav>
-        
     </div>
     
     <h1>Product Name</h1>
@@ -37,7 +95,7 @@
 
     </p>
     
-    <p style="max-width: 600px; margin: 0;"> 
+    <p> 
         This app lets you update photos of all your clothings and
         the AI system will choose your outfit for the day based on what 
         fit you are going for (athletic, professional, casual, fancy).
