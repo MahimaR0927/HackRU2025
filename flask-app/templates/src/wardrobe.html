@@ -27,10 +27,11 @@
 
         <h2>Add Items to Wardrobe</h2>
 
-        <div class="input-area">
+        <form id = "uploadForm">
+            <button type = "submit" id="uploadButton">UploadItems</button>
             <label for="clothing-file" style="font-weight: bold;">Choose image(s) to add:</label>
-            <input type="file" id="clothing" accept="image/*" multiple>
-        </div>
+            <input type="file" id="clothing-file" accept="image/*" multiple>
+        </form>
 
         <h3>Your Items:</h3>
         <div id="previewContainer" style="display: flex; flex-wrap: wrap; gap: 20px;">
