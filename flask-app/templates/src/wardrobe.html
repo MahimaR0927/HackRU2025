@@ -17,7 +17,7 @@
                     <a href="{{ url_for('wardrobe')}}">My Wardrobe</a>
                 </li>
                 <li> 
-                    <a href="outfits.html">My Wardrobe</a>
+                    <a href="outfits.html">My Outfits</a>
                 </li>
             </ul>
         </nav>
@@ -27,7 +27,7 @@
 
         <h2>Add Items to Wardrobe</h2>
 
-        <form id = "uploadForm">
+        <form id = "uploadForm" class="input-area">
             <button type = "submit" id="uploadButton">Upload Items</button>
             <label for="clothing-file" style="font-weight: bold;">Choose image(s) to add:</label>
             <input type="file" id="clothing-file" accept="image/*" multiple>
@@ -44,8 +44,9 @@
 let allItems = [];
 let allTags = [];
 
-function showClothing() {
-    const fileInput = document.getElementById('clothing');
+function handleFileUpload(event) {
+    event.preventDefault(); 
+    const fileInput = document.getElementById('clothing-file');
     const newImages = fileInput.files;
 
     if (newImages.length === 0) return;
@@ -108,8 +109,7 @@ function redrawPreviews() {
         reader.readAsDataURL(file);
     });
 }
-
-document.getElementById('clothing').addEventListener('change', showClothing);
+document.getElementById('uploadForm').addEventListener('submit', handleFileUpload);
 </script>
 
 </body>
