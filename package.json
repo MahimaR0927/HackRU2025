@@ -1,0 +1,25 @@
+{
+  "name": "hackru",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MahimaR0927/HackRU2025.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MahimaR0927/HackRU2025/issues"
+  },
+  "homepage": "https://github.com/MahimaR0927/HackRU2025#readme",
+  "description": "",
+  "devDependencies": {
+    "svelte": "^5.39.8",
+    "vite": "^7.1.9"
+  }
+}
