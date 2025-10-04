@@ -1,0 +1,6 @@
+athleisure
+casual
+classic
+relaxed
+romantic
+formal
