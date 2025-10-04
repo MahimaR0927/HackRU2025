@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Product Name - My Wardrobe</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
                     <a href="{{ url_for('wardrobe')}}">My Wardrobe</a>
                 </li>
                 <li> 
-                    <a href="outfits.html">Outfits</a>
+                    <a href="outfits.html">My Outfits</a>
                 </li>
             </ul>
         </nav>
