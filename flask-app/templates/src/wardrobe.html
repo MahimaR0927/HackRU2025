@@ -2,73 +2,7 @@
 <html>
 <head>
     <title>Product Name - My Wardrobe</title>
-    <style>
-        /* General body styling */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Menu Board Styling (Same as homepage.html) */
-        .menu-board {
-            border-bottom: 2px solid #5C1E7E;
-            padding: 10px 20px;
-            margin-bottom: 30px;
-            background-color: #f8f8f8;
-        }
-
-        .menu-board nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            gap: 20px;
-        }
-
-        .menu-board nav ul li {
-            border: none;
-            padding: 0;
-            width: auto;
-        }
-
-        .menu-board nav ul li a {
-            text-decoration: none;
-            color: #5C1E7E;
-            font-weight: bold;
-            padding: 5px 10px;
-            transition: color 0.3s;
-        }
-        
-        .menu-board nav ul li a:hover {
-            color: #8A4AC7;
-            text-decoration: underline;
-        }
-
-        /* Wardrobe Page Specific Styling */
-        .content-container {
-            padding: 0 20px; /* Add some padding to the main content */
-        }
-
-        h2 {
-            color: #333;
-        }
-
-        /* Input/Button area styling */
-        .input-area {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .clothing-preview {
-            border: 2px solid #ddd; /* Lighter border for a softer look */
-            border-radius: 8px;     /* More rounded corners */
-            padding: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -94,7 +28,7 @@
         <h2>Add Items to Wardrobe</h2>
 
         <div class="input-area">
-            <label for="clothing" style="font-weight: bold;">Choose image(s) to add:</label>
+            <label for="clothing-file" style="font-weight: bold;">Choose image(s) to add:</label>
             <input type="file" id="clothing" accept="image/*" multiple>
         </div>
 
