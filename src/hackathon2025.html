@@ -4,12 +4,11 @@
 <style>
     /* ADDED: A new CSS class for the images */
     .clothing-preview {
-        border: 2px solid #333; /* 2-pixel solid dark grey border */
+        border: 2px solid #000000; /* 2-pixel solid dark black border */
         border-radius: 5px;     /* Slightly rounded corners */
         padding: 5px;           /* Small space between image and border */
     }
 </style>
-
 
 <body>
 
@@ -94,6 +93,7 @@ function redrawPreviews() {
             newImage.width = 300;
             newImage.height = 300;
             newImage.style.display = 'block';
+            newImage.className = 'clothing-preview';
 
             // Create the tag element
             const tagElement = document.createElement('span');
