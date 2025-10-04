@@ -1,49 +1,52 @@
+<!DOCTYPE html>
 <html>
-    <body>
-        <h1> Product Name </h1>
+<body>
 
-        <p> 
-            This app lets you update photos of all your clothings and
-            the AI system will choose your outfit for the day based on what 
-            fit you are going for (athletic, professional, casual, fancy)
-        </p>
+<h1> Product Name </h1>
 
-        <label for="clothing">Choose an image</label>
-        <input type="file" id="clothing" accept="image/*">
+<p> 
+    This app lets you update photos of all your clothings and
+    the AI system will choose your outfit for the day based on what 
+    fit you are going for (athletic, professional, casual, fancy)
+</p>
 
-        <label for="fit"> Enter a tag for clothing</label> 
-        <input type="text" id="fit" placeholder="Pick a style">
+<label for="clothing">Choose an image</label>
+<input type="file" id="clothing" accept="image/*">
 
-        <button onclick="showClothing()">Submit</button>
+<label for="fit"> Enter a tag for clothing</label> 
+<input type="text" id="fit" placeholder="Pick a style">
 
-        <div>
-            <img id="previewImage" width="300" height="300" style="display:none;"><br>
-            <span id="tagDisplay"></span>
-        </div>
+<div>
+    <img id="previewImage" width="300" height="300" style="display:none;"><br>
+    <span id="tagDisplay"></span>
+</div>
 
-        <script>
-            function showClothing(){
-                const fileInput = document.getElementById('clothing'); //user chooses image
-                const tagInput = document.getElementById("fit"); //user types tag
-                const previewImage = document.getElementById("previewImage"); //image is displayed
-                const tagDisplay = document.getElementById("tagDisplay"); //where tag is displayed
+<script>
+function showClothing() {
+    const fileInput = document.getElementById('clothing'); // user chooses image
+    const tagInput = document.getElementById("fit"); // user types tag
+    const previewImage = document.getElementById("previewImage"); // image is displayed
+    const tagDisplay = document.getElementById("tagDisplay"); // where tag is displayed
 
-                const file = fileInput.files[0];
-                if(!file){
-                    alert("Please select image");
-                    return;
-                }
+    const file = fileInput.files[0]; // get the selected file
+    if (!file) return; // no file selected
 
-                const reader = new FileReader();
-                reader.onload = function(e){
-                    previewImage.src = e.target.result;
-                    previewImage.style.display = "block";
-                    tagDisplay.innerText = "Tag: " + tagInput.value;
-                }
-                reader.readAsDataURL(file);
-            }
-        </script>
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        previewImage.src = e.target.result; // set image source
+        previewImage.style.display = "block"; // show the image
+        tagDisplay.innerText = "Tag: " + tagInput.value; // show tag
+    }
 
-    </body>
+    reader.readAsDataURL(file);
+}
 
+// Update image and tag immediately when user selects a file
+document.getElementById('clothing').addEventListener('change', showClothing);
+
+// Update tag display immediately when user types in the input
+document.getElementById('fit').addEventListener('input', showClothing);
+</script>
+
+</body>
 </html>
