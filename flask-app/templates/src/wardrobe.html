@@ -35,6 +35,10 @@
 
         <h3>Your Items:</h3>
         <div id="previewContainer" style="display: flex; flex-wrap: wrap; gap: 20px;">
+
+                {% for item in imgs %}
+                    <img src = " {{item.img_path}} ">
+                {% endfor %}
         </div>
 
     </div>
@@ -68,7 +72,8 @@ function handleFileUpload(event) {
         allTags.push(cleanTag);
     }
     
-    fileInput.value = ''; 
+    fileInput.value = '';
+
     redrawPreviews();
 }
 
