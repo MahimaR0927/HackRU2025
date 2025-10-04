@@ -1,1 +1,6 @@
-<script>let name = "world";</script><h1>Hello {name}!</h1>
+<script>
+    import UploadPic from './uploadpic2.svelte';
+</script>
+  
+  <h1>Welcome to HackRU Project</h1>
+  <UploadPic></UploadPic>

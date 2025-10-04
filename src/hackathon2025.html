@@ -10,42 +10,90 @@
     fit you are going for (athletic, professional, casual, fancy)
 </p>
 
-<label for="clothing">Choose an image</label>
-<input type="file" id="clothing" accept="image/*">
+<label for="clothing">Choose image(s) to add</label>
+<input type="file" id="clothing" accept="image/*" multiple>
 
 <label for="fit"> Enter a tag for clothing</label> 
 <input type="text" id="fit" placeholder="Pick a style">
 
-<div>
-    <img id="previewImage" width="300" height="300" style="display:none;"><br>
+<div id="previewContainer">
     <span id="tagDisplay"></span>
 </div>
 
 <script>
+// 1. Array to store all accumulated files
+let allFiles = [];
+
 function showClothing() {
-    const fileInput = document.getElementById('clothing'); // user chooses image
-    const tagInput = document.getElementById("fit"); // user types tag
-    const previewImage = document.getElementById("previewImage"); // image is displayed
-    const tagDisplay = document.getElementById("tagDisplay"); // where tag is displayed
+    const fileInput = document.getElementById('clothing');
+    const tagInput = document.getElementById("fit");
+    const previewContainer = document.getElementById("previewContainer");
+    
+    // Get the newly selected files
+    const newFiles = fileInput.files;
 
-    const file = fileInput.files[0]; // get the selected file
-    if (!file) return; // no file selected
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        previewImage.src = e.target.result; // set image source
-        previewImage.style.display = "block"; // show the image
-        tagDisplay.innerText = "Tag: " + tagInput.value; // show tag
+    // 2. Add new files to the master array
+    for (let i = 0; i < newFiles.length; i++) {
+        allFiles.push(newFiles[i]);
     }
+    
+    // Clear the file input's value so the 'change' event fires again 
+    // even if the user selects the same files.
+    fileInput.value = ''; 
 
-    reader.readAsDataURL(file);
+    // 3. Redraw the entire preview container based on the 'allFiles' array
+    redrawPreviews(tagInput.value);
 }
 
-// Update image and tag immediately when user selects a file
+function redrawPreviews(tagValue) {
+    const previewContainer = document.getElementById("previewContainer");
+    
+    // Clear previous previews entirely
+    previewContainer.innerHTML = ''; 
+
+    // Display the single tag at the top of the container
+    const tagSpan = document.createElement('span');
+    tagSpan.id = "tagDisplay";
+    tagSpan.innerText = "Tag: " + tagValue;
+    previewContainer.appendChild(tagSpan);
+    
+    // Only add a line break if there are files to show
+    if (allFiles.length > 0) {
+        previewContainer.appendChild(document.createElement('br'));
+    }
+    
+    // Loop through ALL accumulated files
+    for (let i = 0; i < allFiles.length; i++) {
+        const file = allFiles[i];
+        
+        // Use a FileReader to read each file
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // Create a new image element for each file
+            const newImage = document.createElement('img');
+            newImage.src = e.target.result;
+            newImage.width = 300;
+            newImage.height = 300;
+            newImage.style.marginRight = "10px";
+            newImage.style.marginBottom = "10px";
+
+            // Append the new image to the container
+            previewContainer.appendChild(newImage);
+        }
+
+        reader.readAsDataURL(file);
+    }
+}
+
+
+// Attach the function to the 'change' event on the file input
 document.getElementById('clothing').addEventListener('change', showClothing);
 
 // Update tag display immediately when user types in the input
-document.getElementById('fit').addEventListener('input', showClothing);
+// This will trigger a full redraw to update the tag text
+document.getElementById('fit').addEventListener('input', function() {
+    redrawPreviews(this.value);
+});
 </script>
 
 </body>
