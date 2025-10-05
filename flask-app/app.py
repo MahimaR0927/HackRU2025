@@ -47,7 +47,7 @@ def wardrobe():
                 imgs.append(clothingPiece(filename, main.generate_tags(file_path_on_server)))
 
         
-        except Exception as e:
+    except Exception as e:
             error = "Error:" + str(e)
             print(error)
             imgs = []
