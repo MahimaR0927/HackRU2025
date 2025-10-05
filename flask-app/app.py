@@ -15,7 +15,6 @@ def wardrobe():
     imgs = []
 
     try:
-        print(request.method == "POST")
         if request.method == "POST":
 
             if 'clothing-file' not in request.files:
@@ -40,6 +39,7 @@ def wardrobe():
                 # Now you have the file and its path on the server
                 print(f'File uploaded successfully to: {file_path_on_server}')
                 imgs.append(clothingPiece(filename, main.generate_tags(file_path_on_server)))
+                print(imgs[-1])
 
         
     except Exception as e:
@@ -56,6 +56,6 @@ class clothingPiece:
         self.tags = args[1]
 
     def __str__(self):
-        return self.img_path + ":" + self.imgs
+        return self.img_path + ":" + " ".join(self.tags)
 
     

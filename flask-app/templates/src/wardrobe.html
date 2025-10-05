@@ -37,7 +37,7 @@
         <div id="previewContainer" style="display: flex; flex-wrap: wrap; gap: 20px;">
 
                 {% for item in imgs %}
-                    <img src = " {{item.img_path}} ">
+                    <img src = "images/ {{item.img_path.split(' ')}} ">
                 {% endfor %}
         </div>
 
