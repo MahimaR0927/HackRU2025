@@ -27,8 +27,8 @@
 
         <h2>Add Items to Wardrobe</h2>
 
-        <form id = "uploadForm" class="input-area" name = "uploadForm">
-            <button type = "submit" id="uploadButton" name = "uploadButton">Upload Items</button>
+        <form action="{{ url_for('wardrobe')}}" method = "post" enctype="multipart/form-data" id = "uploadForm" class="input-area">
+            <button name = "uploadButton" type = "submit" id="uploadButton">Upload Items</button>
             <label for="clothing-file" style="font-weight: bold;" >Choose image(s) to add:</label>
             <input type="file" id="clothing-file" accept="image/*" name = "clothing-file" multiple>
         </form>
@@ -43,13 +43,18 @@
 
     </div>
 
+
+
 <script>
 // ... (The JavaScript code remains the same, but it's not shown here for brevity) ...
+
 let allItems = [];
 let allTags = [];
 
+/*
 function handleFileUpload(event) {
     event.preventDefault(); 
+
     const fileInput = document.getElementById('clothing-file');
     const newImages = fileInput.files;
 
@@ -71,10 +76,14 @@ function handleFileUpload(event) {
 
         allTags.push(cleanTag);
     }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "{{ url_for('wardrobe')}}", true);
     
     fileInput.value = '';
 
     redrawPreviews();
+
 }
 
 function redrawPreviews() {
@@ -93,9 +102,9 @@ function redrawPreviews() {
         reader.onload = function(e) {
             const newImage = document.createElement('img');
             newImage.src = e.target.result;
-            newImage.width = 150; /* Reduced image size for a cleaner look */
+            newImage.width = 150; 
             newImage.height = 150;
-            newImage.style.objectFit = 'cover'; /* Ensures images fill the space nicely */
+            newImage.style.objectFit = 'cover'; 
             newImage.style.display = 'block';
             newImage.className = 'clothing-preview';
 
@@ -103,7 +112,7 @@ function redrawPreviews() {
             tagElement.innerText = "Tag: " + tag;
             tagElement.style.fontWeight = 'bold';
             tagElement.style.display = 'block';
-            tagElement.style.marginTop = '5px'; /* Space between image and tag */
+            tagElement.style.marginTop = '5px'; 
 
             itemWrapper.appendChild(newImage);
             itemWrapper.appendChild(tagElement);
@@ -112,9 +121,12 @@ function redrawPreviews() {
         }
 
         reader.readAsDataURL(file);
+
     });
 }
 document.getElementById('uploadForm').addEventListener('submit', handleFileUpload);
+
+*/
 </script>
 
 </body>
