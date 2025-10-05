@@ -112,4 +112,4 @@ def confirm_email(token):
     else:
         flash('Account not found.', 'danger')
 
-    return redirect(url_for('wardrobe'))
+    return redirect(url_for('index'))
