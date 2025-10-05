@@ -9,20 +9,25 @@
 
 
   <div class="menu-board">
-      <nav>
-          <ul>
-              <li>
-                  <a href="{{ url_for('index')}}">Home</a>
-              </li>
-              <li>
-                  <a href="{{ url_for('wardrobe')}}">My Wardrobe</a>
-              </li>
-              <li>
-                  <a href="outfits.html">My Outfits</a>
-              </li>
-          </ul>
-      </nav>
-  </div>
+        <!-- Logo -->
+        <a href="{{ url_for('index') }}" id="logo">
+            <img src="{{ url_for('static', filename='logo/Flairize Logo.png') }}" alt="Flairize Logo">
+        </a>
+        
+        <nav>
+            <ul>
+                <li> 
+                    <a href="{{ url_for('index')}}">Home</a>
+                </li>
+                <li> 
+                    <a href="{{ url_for('wardrobe')}}">My Wardrobe</a>
+                </li>
+                <li> 
+                    <a href="{{ url_for('outfits')}}">Outfits</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 
 
 
@@ -223,7 +228,22 @@ document.getElementById('uploadForm').addEventListener('submit', handleFileUploa
 
 </script>
 
+    <script>
+    window.onscroll = function() {scrollFunction()};
 
+    function scrollFunction() {
+    const navbar = document.querySelector(".menu-board");
+    const logo = document.querySelector("#logo img");
+
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        navbar.style.padding = "20px 10px";   // shrink padding
+        logo.style.height = "40px";           // shrink logo
+    } else {
+        navbar.style.padding = "40px 20px";   // original padding
+        logo.style.height = "80px";           // original logo size
+    }
+    }
+    </script>
 
 
 </body>
