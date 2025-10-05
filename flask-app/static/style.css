@@ -1,16 +1,32 @@
 /* General body styling */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Lora', serif;
     margin: 0;
     padding: 0;
+    background-color: #dbc5ae;
 }
 
 /* Menu Board Styling (Same as homepage.html) */
 .menu-board {
-    border-bottom: 2px solid #5C1E7E;
-    padding: 10px 20px;
-    margin-bottom: 30px;
-    background-color: #f8f8f8;
+    border-bottom: 4px solid #9f7d29;
+    padding: 40px 20px;
+    margin-bottom: 20px;
+    background-color: #4b7af2; 
+    display: flex; /* flexbox for row layout */
+    align-items: center; /* vertical centering */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+    transition: 0.4s; /* smooth shrink transition */
+}
+
+/*Logo image*/
+#logo img {
+    height: 80px; /* logo size*/
+    width: auto;
+    margin: 0px 10px 0px 0px;  /* space before menu */
+    transition: 0.4s;
 }
 
 .menu-board nav ul {
@@ -29,15 +45,23 @@ body {
 
 .menu-board nav ul li a {
     text-decoration: none;
-    color: #5C1E7E;
+    color: #bbcddf;
     font-weight: bold;
     padding: 5px 10px;
     transition: color 0.3s;
+    font-size: 17px;
 }
 
 .menu-board nav ul li a:hover {
-    color: #8A4AC7;
+    color: #0b549c;
     text-decoration: underline;
+}
+
+/* Active tab */
+.menu-board nav ul li a.active {
+    background-color: #04a2aa;
+    color: white;
+    border-radius: 4px;
 }
 
 /* Wardrobe Page Specific Styling */
@@ -45,8 +69,46 @@ body {
     padding: 0 20px;
 }
 
+.content-container {
+    margin-top: 200px;
+    margin-left: 50px; /* Consistently moves all content 50px from the left */
+    max-width: 900px; /* Optional: keeps the text width manageable */
+}
+
+/* Adjusting existing p max-width */
+p {
+    max-width: 600px;
+    line-height: 1.6; /* Improves readability */
+}
+
+h1 {
+    font-family: 'Great Vibes', cursive;
+}
+
 h2 {
     color: #333;
+}
+
+/* Adjusting h3 spacing */
+h3 {
+    margin-top: 30px;
+    font-style: italic;
+}
+
+/* adjusts to small screens by stacking links instead */
+@media screen and (max-width: 580px) {
+    .menu-board {
+        padding: 20px 10px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .menu-board nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .content-container {
+        margin-top: 100px; /* reduce spacing when navbar shrinks on small screens */
+    }
 }
 
 /* Input/Button area styling */
@@ -57,12 +119,12 @@ h2 {
     gap: 10px;
 }
 
-.clothing-preview {
+/* .clothing-preview {
     border: 2px solid #ddd;
     border-radius: 8px;
     padding: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+} */
 
 /* Styling for the new upload button */
 #uploadButton {
@@ -85,4 +147,9 @@ h2 {
     height: 150px;
     object-fit: cover;
     display: block;
+    
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }

@@ -18,9 +18,24 @@
         /* Menu Board Styling */
         .menu-board {
             border-bottom: 4px solid #9f7d29; 
-            padding: 10px 20px;
-            margin-bottom: 30px;
+            padding: 40px 20px;
+            margin-bottom: 20px;
             background-color: #4b7af2; 
+            display: flex; /* flexbox for row layout */
+            align-items: center; /* vertical centering */
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 99;
+            transition: 0.4s; /* smooth shrink transition */
+        }
+
+        /*Logo image*/
+        #logo img {
+            height: 80px; /* logo size*/
+            width: auto;
+            margin: 0px 10px 0px 0px;  /* space before menu */
+            transition: 0.4s;
         }
 
         /* Navigation List Styling */
@@ -39,12 +54,20 @@
             font-weight: bold;
             padding: 5px 10px;
             transition: color 0.3s;
+            font-size: 17px;
         }
         
         /* Link Hover Effect */
         .menu-board nav ul li a:hover {
             color: #0b549c; 
             text-decoration: underline;
+        }
+
+        /* Active tab */
+        .menu-board nav ul li a.active {
+            background-color: #04a2aa;
+            color: white;
+            border-radius: 4px;
         }
         
         /* --- REMOVED OLD STYLES ---
@@ -56,6 +79,7 @@
         /* Content Container Styling (NEW) */
         /* This applies a left margin to all content inside it */
         .content-container {
+            margin-top: 200px;
             margin-left: 50px; /* Consistently moves all content 50px from the left */
             max-width: 900px; /* Optional: keeps the text width manageable */
         }
@@ -76,10 +100,31 @@
             font-family: 'Great Vibes', cursive;
         }
 
+        /* adjusts to small screens by stacking links instead */
+        @media screen and (max-width: 580px) {
+            .menu-board {
+                padding: 20px 10px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .menu-board nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .content-container {
+                margin-top: 100px; /* reduce spacing when navbar shrinks on small screens */
+            }
+        }
+
     </style>
 </head>
 <body> 
     <div class="menu-board">
+        <!-- Logo -->
+        <a href="{{ url_for('index') }}" id="logo">
+            <img src="{{ url_for('static', filename='logo/Flairize Logo.png') }}" alt="Flairize Logo">
+        </a>
+        
         <nav>
             <ul>
                 <li> 
@@ -116,5 +161,23 @@
         </p> 
         
 
-    </div> </body>
+    </div> 
+    
+    <script>
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+    const navbar = document.querySelector(".menu-board");
+    const logo = document.querySelector("#logo img");
+
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        navbar.style.padding = "20px 10px";   // shrink padding
+        logo.style.height = "40px";           // shrink logo
+    } else {
+        navbar.style.padding = "40px 20px";   // original padding
+        logo.style.height = "80px";           // original logo size
+    }
+    }
+    </script>
+</body>
 </html>
