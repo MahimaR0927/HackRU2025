@@ -12,7 +12,7 @@ def index():
 @app.route("/wardrobe", methods=['GET', 'POST'])
 
 def wardrobe():
-
+    
     imgs = []
     error = ""
 
@@ -50,7 +50,6 @@ def wardrobe():
             imgs = []
 
     return render_template("src/wardrobe.html", imgs = imgs)
-
 
 class clothingPiece:
     def __init__(self, *args):
