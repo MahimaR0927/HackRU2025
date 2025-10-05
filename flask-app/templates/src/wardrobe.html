@@ -5,12 +5,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-
-
-
 <body>
-
-
 
 
   <div class="menu-board">
@@ -56,21 +51,13 @@
           </div>
     
       <h3>Your Items (From Database):</h3>
-      <div id="databaseItems" style="display: flex; flex-wrap: wrap; gap: 20px;">
-          {% for img in imgs %}
-          <div class="clothing-preview-item" style="text-align: center;">
-              <p style="font-size: small; max-width: 150px; overflow-wrap: break-word;">{{ img.img_path }}</p>
-              <span style="font-weight: bold; display: block;">Tag: {{ img.tags|join(', ') }}</span>
-          </div>
-          {% endfor %}
-
 
           {% for item in imgs %}
-              <div class="clothing-preview-item" style="text-align: center;">
-                  <img class = "clothing-preview" src = "{{ url_for('static', filename= '/images/' + item.img_path) }}" width="150" height="150" style="object-fit: cover;">
-                  <span style="font-weight: bold; display: block; margin-top: 5px;">
+              <div class="clothing-preview-item">
+                  <img class = "clothing-preview" src = "{{ url_for('static', filename= '/images/' + item.img_path) }}" alt="" width="150" height="150" style="object-fit: cover;">
+                  <p style="font-weight: bold; display: block; margin-top: 5px;">
                       Tags: {{ item.tags|join(', ') }}
-                  </span>
+                  </p>
               </div>
           {% endfor %}
       </div>
@@ -225,11 +212,18 @@ async function handleFileUpload(event) {
    }
 }
 
+
+
+
 // --- 4. Attach Event Listeners ---
 document.getElementById('clothing-file').addEventListener('change', handleFileSelect);
 document.getElementById('uploadForm').addEventListener('submit', handleFileUpload);
 
+
 </script>
+
+
+
 
 </body>
 </html>

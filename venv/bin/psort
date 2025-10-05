@@ -1,0 +1,62 @@
+#!/home/hannah/school/HackRUF2025/HackRU2025/venv/bin/python3
+import argparse
+import pandas as pd
+import sys
+import pcsv.utils
+
+def readCL():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-f","--infile",type=argparse.FileType("r"),default=sys.stdin)
+    parser.add_argument("-c","--sort_list",help="csv of column names or indices. Can include currently non-existent columns",default="")
+    parser.add_argument("-r","--reverse",action="store_true",help="sort ascending (default descending)")
+    parser.add_argument("-s","--string",action="store_true",help="sort as string (default is float)")
+    parser.add_argument("-d","--delimiter", default=",")
+    parser.add_argument("-n","--no_header",action="store_true")
+    parser.add_argument("--sort_by_row",type=int,help="Sort the columns by a row instead of the other way around. Rows are zero-indexed.")
+    args = parser.parse_args()
+    args.sort_list = args.sort_list.split(",")
+    return args.infile, args.sort_list, args.reverse, args.string, args.delimiter, args.no_header, args.sort_by_row
+
+
+def sort_df(df, sort_list, string, reverse, sort_by_row):
+    if sort_by_row is not None:
+        sort_list = [sort_by_row]
+    else:
+        sort_list = list(proc_sort_list(sort_list, df))
+
+    if sort_by_row is not None:
+        df = df.transpose() #transpose and then handle normally
+    
+    if not string:
+        tmp_df = pd.DataFrame()
+        for s in sort_list:
+            tmp_df[s] = df[s].apply(lambda x: float(x))
+        tmp_df = tmp_df.sort_values(by=sort_list, ascending=(reverse))
+        df = df.reindex(tmp_df.index)
+    else:
+        df = df.sort_values(by=sort_list, ascending=(not reverse))
+
+    if sort_by_row is not None:
+        df = df.transpose() #undo the transpose above
+    return df
+    
+
+if __name__ == "__main__":
+    infile, sort_list, reverse, string, delimiter, no_header, sort_by_row = readCL()
+    pcsv.utils.fix_broken_pipe()
+    def proc_sort_list(sort_list, df):
+        for index in sort_list:
+            if index in df.columns:
+                yield index
+            elif pcsv.utils.str_is_int(index):
+                yield df.columns[int(index)]
+            else:
+                raise Exception("ERROR: invalid sort_list element {index}".format(**vars()))
+    args = {}
+    if no_header:
+        args["header"]=None
+    df = pd.read_csv(infile, delimiter=delimiter, encoding="utf-8", dtype="object", **args)
+    
+    df = sort_df(df, sort_list, string, reverse, sort_by_row)
+
+    df.to_csv(sys.stdout,index=False,encoding="utf-8")
