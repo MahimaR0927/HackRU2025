@@ -20,8 +20,6 @@ def wardrobe():
             new_tags = main.generate_tags(img_path)
             imgs.append(clothingPiece(img_path, new_tags))
 
-<<<<<<< HEAD
-=======
             if 'clothing-file' not in request.files:
                 print('No file part')
 
@@ -48,7 +46,6 @@ def wardrobe():
                 print(imgs[-1])
 
         
->>>>>>> 4c3089c692d41276c3c3cca2013a3a72c9529932
     except Exception as e:
         error = "Error:" + str(e)
         imgs = []
@@ -61,10 +58,7 @@ class clothingPiece:
         self.img_path = args[0]
         self.tags = args[1]
 
-<<<<<<< HEAD
-=======
     def __str__(self):
         return self.img_path + ":" + " ".join(self.tags)
 
->>>>>>> 4c3089c692d41276c3c3cca2013a3a72c9529932
     
