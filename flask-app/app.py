@@ -1,7 +1,9 @@
+import os
 from flask import Flask, request, url_for, redirect, render_template
 import main
 
 app = Flask(__name__)
+
 
 @app.route("/")
 def index():
@@ -14,16 +16,13 @@ def wardrobe():
     imgs = []
     error = ""
 
-    try:
-        if request.method == "POST":
-            img_path = request.form.get("clothing-file").strip()
-            new_tags = main.generate_tags(img_path)
-            imgs.append(clothingPiece(img_path, new_tags))
+    if request.method == "POST":
+        try:
 
             if 'clothing-file' not in request.files:
                 print('No file part')
 
-            UPLOAD_FOLDER = 'templates/static/images' # Replace with your desired path
+            UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'images') # Replace with your desired path
             app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
             file = request.files['clothing-file']
@@ -43,12 +42,12 @@ def wardrobe():
                 print(f'File uploaded successfully to: {file_path_on_server}')
 
                 imgs.append(clothingPiece(filename, main.generate_tags(file_path_on_server)))
-                print(imgs[-1])
 
         
-    except Exception as e:
-        error = "Error:" + str(e)
-        imgs = []
+        except Exception as e:
+            error = "Error:" + str(e)
+            print(error)
+            imgs = []
 
     return render_template("src/wardrobe.html", imgs = imgs)
 

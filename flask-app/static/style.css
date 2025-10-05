@@ -79,3 +79,10 @@ h2 {
 #uploadButton:hover {
     background-color: #8A4AC7;
 }
+
+.clothing-preview{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
