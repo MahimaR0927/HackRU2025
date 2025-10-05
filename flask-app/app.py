@@ -44,12 +44,15 @@ class clothingPiece:
         # Ensures tags is always a list for the Jinja template's '|join' filter
         self.tags = tags.split(', ') if isinstance(tags, str) else tags
 
-
 @app.route("/")
 def index():
     """Renders the homepage."""
     return render_template("src/homepage.html")
 
+
+@app.route("/outfits")
+def outfits():
+    return render_template("src/outfits.html")
 
 @app.route("/wardrobe", methods=['GET', 'POST'])
 def wardrobe():
