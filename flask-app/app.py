@@ -1,7 +1,7 @@
 import os
 import json # Only needed if you plan to use jsonify in the future, currently commented out
 from flask import Flask, request, render_template, jsonify
-# import main # Keep this if you use main.generate_tags later
+import main # Keep this if you use main.generate_tags later
 from pymongo import MongoClient
 from werkzeug.utils import secure_filename
 
@@ -71,17 +71,21 @@ def wardrobe():
         
         for i, file in enumerate(uploaded_files):
             # Get the corresponding tag using the index (e.g., tag_0, tag_1)
-            tag_key = f'tag_{i}'
-            tag_string = request.form.get(tag_key, 'No Tag').strip()
+
+
+            #tag_key = f'tag_{i}'
+            #tag_string = request.form.get(tag_key, 'No Tag').strip()
             
             # 1. Secure filename and define the full local path
             filename = secure_filename(file.filename)
+
             # The file is saved to the UPLOAD_FOLDER (static/images)
             file_path_on_server = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             
             try:
                 # 2. Save the file to the 'static/images' folder
                 file.save(file_path_on_server) 
+                tag_string = main.generate_tags(file_path_on_server)
 
                 # NOTE: If you integrate main.generate_tags, place the call here:
                 # new_tags = main.generate_tags(file_path_on_server)

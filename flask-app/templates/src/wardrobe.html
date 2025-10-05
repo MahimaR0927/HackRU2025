@@ -90,14 +90,15 @@ function handleFileSelect(event) {
        const file = newImages[i];
       
        // Prompt the user for a tag
-       const tag = prompt(`Enter a comma-separated tag(s) for the image: ${file.name}`, 'casual, top');
+       //const tag = prompt(`Enter a comma-separated tag(s) for the image: ${file.name}`, 'casual, top');
       
-       if (tag === null) continue; // User cancelled
+       //if (tag === null) continue; // User cancelled
 
 
        allItems.push({
            file: file,
-           tag: tag.trim() || 'No Tag' // Use the raw string from the prompt
+           //tag: tag.trim() || 'No Tag' // Use the raw string from the prompt
+           tag: null
        });
    }
 
