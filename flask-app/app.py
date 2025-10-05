@@ -46,6 +46,11 @@ class clothingPiece:
 
 @app.route("/")
 def index():
+    """Renders the login."""
+    return render_template("src/login.html")
+
+@app.route("/homepage")
+def homepage():
     """Renders the homepage."""
     return render_template("src/homepage.html")
 
