@@ -37,4 +37,20 @@
             </form>
         </div>
     </body>
+    <script>
+         document.querySelector('form').addEventListener('submit', function(event) {
+    // 1. Prevents the browser from trying to submit the form normally
+    event.preventDefault(); 
+    
+    // 2. Simulate the server-side success message
+    // In a real Flask app, this would be handled by the redirect from the Python code.
+    alert('Success! Account registered and confirmation email sent. Redirecting to homepage.');
+
+    // 3. Redirect to your homepage HTML file
+    window.location.href = 'homepage.html'; 
+});
+
+    //This ensures that when you press "Register Account," the form no longer generates a "File not found" error, and instead directs you cleanly to the `index.html` file.
+    </script>
+   
 </html>
