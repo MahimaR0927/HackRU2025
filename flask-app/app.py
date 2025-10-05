@@ -50,6 +50,7 @@ def index():
     """Renders the homepage."""
     return render_template("src/homepage.html")
 
+
 @app.route("/wardrobe", methods=['GET', 'POST'])
 def wardrobe():
     current_imgs = []
