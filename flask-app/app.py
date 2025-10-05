@@ -45,9 +45,9 @@ def wardrobe():
                 print(f'File uploaded successfully to: {file_path_on_server}')
 
                 imgs.append(clothingPiece(filename, main.generate_tags(file_path_on_server)))
-
+                # also append to database here
         
-        except Exception as e:
+    except Exception as e:
             error = "Error:" + str(e)
             print(error)
             imgs = []
