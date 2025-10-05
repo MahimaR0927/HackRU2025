@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request, url_for, redirect, render_template
 import main
 
@@ -13,10 +12,16 @@ def index():
 def wardrobe():
 
     imgs = []
+    error = ""
 
     try:
         if request.method == "POST":
+            img_path = request.form.get("clothing-file").strip()
+            new_tags = main.generate_tags(img_path)
+            imgs.append(clothingPiece(img_path, new_tags))
 
+<<<<<<< HEAD
+=======
             if 'clothing-file' not in request.files:
                 print('No file part')
 
@@ -43,12 +48,12 @@ def wardrobe():
                 print(imgs[-1])
 
         
+>>>>>>> c7b405f6dde5a48ba759e14e0c99f09236e19b30
     except Exception as e:
-        print(str(e))
+        error = "Error:" + str(e)
         imgs = []
 
-    return render_template("src/wardrobe.html", imgs = imgs)    
-
+    return render_template("src/wardrobe.html", imgs = imgs)
 
 
 class clothingPiece:
@@ -56,7 +61,10 @@ class clothingPiece:
         self.img_path = args[0]
         self.tags = args[1]
 
+<<<<<<< HEAD
+=======
     def __str__(self):
         return self.img_path + ":" + " ".join(self.tags)
 
+>>>>>>> c7b405f6dde5a48ba759e14e0c99f09236e19b30
     

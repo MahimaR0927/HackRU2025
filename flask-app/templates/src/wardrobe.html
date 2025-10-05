@@ -3,7 +3,7 @@
 <head>
     <title>Product Name - My Wardrobe</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+    </head>
 
 <body>
 
@@ -33,8 +33,18 @@
             <input type="file" id="clothing-file" accept="image/*" name = "clothing-file" multiple>
         </form>
 
-        <h3>Your Items:</h3>
+        <h3>Items to Upload (Preview):</h3>
         <div id="previewContainer" style="display: flex; flex-wrap: wrap; gap: 20px;">
+            </div>
+        
+        <h3>Your Items (From Database):</h3>
+        <div id="databaseItems" style="display: flex; flex-wrap: wrap; gap: 20px;">
+            {% for img in imgs %}
+            <div class="clothing-preview-item" style="text-align: center;">
+                <p style="font-size: small; max-width: 150px; overflow-wrap: break-word;">{{ img.img_path }}</p>
+                <span style="font-weight: bold; display: block;">Tag: {{ img.tags }}</span>
+            </div>
+            {% endfor %}
 
                 {% for item in imgs %}
                     <img src = "images/ {{item.img_path.split(' ')}} ">
@@ -47,14 +57,10 @@
 
 <script>
 // ... (The JavaScript code remains the same, but it's not shown here for brevity) ...
-
 let allItems = [];
-let allTags = [];
 
-/*
 function handleFileUpload(event) {
     event.preventDefault(); 
-
     const fileInput = document.getElementById('clothing-file');
     const newImages = fileInput.files;
 
@@ -62,33 +68,29 @@ function handleFileUpload(event) {
 
     for (let i = 0; i < newImages.length; i++) {
         const file = newImages[i];
+        // Prompt the user for a tag immediately after selection
         const tag = prompt(`Enter a tag for the image: ${file.name}`, 'casual');
         
-        if (tag === null) 
-            continue;
-
-        const cleanTag = tag.trim() || 'No Tag';
+        if (tag === null) continue; // User cancelled
 
         allItems.push({
             file: file,
-            tag: cleanTag
+            tag: tag.trim() || 'No Tag'
         });
-
-        allTags.push(cleanTag);
     }
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "{{ url_for('wardrobe')}}", true);
     
-    fileInput.value = '';
-
+    // Clear the file input so the user can select more files if needed
+    fileInput.value = ''; 
     redrawPreviews();
 
 }
 
+// Function to render the temporary items in the preview area
 function redrawPreviews() {
     const previewContainer = document.getElementById("previewContainer");
-    
     previewContainer.innerHTML = ''; 
 
     allItems.forEach(item => {
@@ -96,6 +98,7 @@ function redrawPreviews() {
         const tag = item.tag;
 
         const itemWrapper = document.createElement('div');
+        itemWrapper.className = 'clothing-preview-item';
         itemWrapper.style.textAlign = 'center';
         
         const reader = new FileReader();
@@ -124,6 +127,56 @@ function redrawPreviews() {
 
     });
 }
+
+
+// *** CRITICAL NEW FUNCTION: Sends the files and tags to the Flask server ***
+async function handleFileUpload(event) {
+    event.preventDefault(); 
+    
+    if (allItems.length === 0) {
+        alert("Please select item(s) to upload first.");
+        return;
+    }
+
+    const uploadButton = document.getElementById('uploadButton');
+    uploadButton.disabled = true;
+    uploadButton.innerText = 'Uploading...';
+
+    const formData = new FormData();
+    
+    // Package all files and their corresponding tags into the FormData object
+    allItems.forEach((item, index) => {
+        formData.append('clothing_file', item.file);
+        // Tags are indexed (tag_0, tag_1, etc.) for the server to match them to the correct file
+        formData.append('tag_' + index, item.tag); 
+    });
+
+    try {
+        const response = await fetch('{{ url_for("wardrobe")}}', { 
+            method: 'POST',
+            body: formData // Sends the files and tags
+        });
+
+        if (response.ok) {
+            alert('Upload successful! Items saved to desktop and database.');
+            // Clear items and refresh the page to show the new items from the DB
+            allItems = []; 
+            window.location.reload(); 
+        } else {
+            const errorData = await response.json();
+            alert(`Upload failed: ${errorData.error || response.statusText}`);
+        }
+    } catch (error) {
+        console.error('Network or server error:', error);
+        alert('An error occurred during upload. Check console for details.');
+    } finally {
+        uploadButton.disabled = false;
+        uploadButton.innerText = 'Upload Items';
+    }
+}
+
+// Attach event listeners
+document.getElementById('clothing-file').addEventListener('change', handleFileSelect);
 document.getElementById('uploadForm').addEventListener('submit', handleFileUpload);
 
 */
