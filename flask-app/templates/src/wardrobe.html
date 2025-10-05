@@ -47,7 +47,13 @@
             {% endfor %}
 
                 {% for item in imgs %}
-                    <img src = "images/ {{item.img_path.split(' ')}} ">
+                    <img class = "clothing-preview" src = "{{ url_for('static', filename= '/images/' + item.img_path) }}">
+                    <ul>
+                        {% for x in item.tags %}
+                            <li>{{ x }}</li>
+
+                        {% endfor %}
+                    </ul>
                 {% endfor %}
         </div>
 
@@ -180,7 +186,6 @@ async function handleFileUpload(event) {
 // Attach event listeners
 document.getElementById('clothing-file').addEventListener('change', handleFileSelect);
 document.getElementById('uploadForm').addEventListener('submit', handleFileUpload);
-
 
 </script>
 
