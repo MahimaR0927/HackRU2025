@@ -1,19 +1,39 @@
 <html>
+    <head>
+        <style>
+            .form-group {
+                /*display: flex;*/ /* FIX: Use 'flex' for alignment */
+                flex-direction: column;
+                padding-bottom: 20px;
+            }
+
+            .form-group label {
+                width: 10px; /* Adjusted width for better spacing */
+                padding-right: 15px;
+                text-align: right; 
+            }
+            
+            /* ... (Corrected CSS for input and button) ... */
+        </style>
+    </head>
+    
     <body>
-        <div class = "login-container">
-            <h2>Log in</h2>
-            <form action = "/login" method="POST">
-                <div class = "form-group">
-                    <label for = "username">Username:</label>
-                    <input type = "text" id="username" name="username" required
-                        placeholder="Enter your username or email">
+        <div class="login-container">
+            <h2>Register</h2>
+            <form action="{{ url_for('register') }}" method="POST">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
                 </div>
-                <div class = "form-group">
-                    <label for = "password">Password:</label>
-                    <input type = "password" id="password" name="password" required
-                        placeholder="Enter your password">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
-                <button type="submit" class="login-button">Log In</button>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Register Account</button>
             </form>
         </div>
     </body>
