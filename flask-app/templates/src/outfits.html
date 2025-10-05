@@ -5,70 +5,116 @@
         <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora&display=swap" rel="stylesheet">
         
         <style>
-            /* General body styling */
-            body {
-                font-family: 'Lora', serif;
-                margin: 0;
-                padding: 0;
-                background-color: #dbc5ae;
-            }
+        /* General body styling */
+        body {
+            font-family: 'Lora', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #dbc5ae;
+        }
 
-            /* Menu Board Styling */
+        /* Menu Board Styling */
+        .menu-board {
+            border-bottom: 4px solid #9f7d29; 
+            padding: 40px 20px;
+            margin-bottom: 20px;
+            background-color: #4b7af2; 
+            display: flex; /* flexbox for row layout */
+            align-items: center; /* vertical centering */
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 99;
+            transition: 0.4s; /* smooth shrink transition */
+        }
+
+        /*Logo image*/
+        #logo img {
+            height: 80px; /* logo size*/
+            width: auto;
+            margin: 0px 10px 0px 0px;  /* space before menu */
+            transition: 0.4s;
+        }
+
+        /* Navigation List Styling */
+        .menu-board nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex; 
+            gap: 20px; 
+        }
+
+        /* Link Styling */
+        .menu-board nav ul li a {
+            text-decoration: none;
+            color: #bbcddf; 
+            font-weight: bold;
+            padding: 5px 10px;
+            transition: color 0.3s;
+            font-size: 17px;
+        }
+        
+        /* Link Hover Effect */
+        .menu-board nav ul li a:hover {
+            color: #0b549c; 
+            text-decoration: underline;
+        }
+
+        /* Active tab */
+        .menu-board nav ul li a.active {
+            background-color: #04a2aa;
+            color: white;
+            border-radius: 4px;
+        }
+        
+        /* --- REMOVED OLD STYLES ---
+           h1, p {
+               margin-left: 20px; 
+           }
+        */
+
+        /* Content Container Styling (NEW) */
+        /* This applies a left margin to all content inside it */
+        .content-container {
+            margin-top: 200px;
+            margin-left: 50px; /* Consistently moves all content 50px from the left */
+            max-width: 900px; /* Optional: keeps the text width manageable */
+        }
+        
+        /* Adjusting existing p max-width */
+        p {
+            max-width: 600px;
+            line-height: 1.6; /* Improves readability */
+        }
+
+        /* Adjusting h3 spacing */
+        h3 {
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* adjusts to small screens by stacking links instead */
+        @media screen and (max-width: 580px) {
             .menu-board {
-                border-bottom: 4px solid #9f7d29; 
-                padding: 10px 20px;
-                margin-bottom: 30px;
-                background-color: #4b7af2; 
+                padding: 20px 10px;
+                flex-direction: column;
+                align-items: flex-start;
             }
-
-            /* Navigation List Styling */
             .menu-board nav ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-                display: flex; 
-                gap: 20px; 
+                flex-direction: column;
+                gap: 10px;
             }
-
-            /* Link Styling */
-            .menu-board nav ul li a {
-                text-decoration: none;
-                color: #bbcddf; 
-                font-weight: bold;
-                padding: 5px 10px;
-                transition: color 0.3s;
-            }
-            
-            /* Link Hover Effect */
-            .menu-board nav ul li a:hover {
-                color: #0b549c; 
-                text-decoration: underline;
-            }
-            
-            /* Content Container Styling (NEW) */
-            /* This applies a left margin to all content inside it */
             .content-container {
-                margin-left: 50px; /* Consistently moves all content 50px from the left */
-                max-width: 900px; /* Optional: keeps the text width manageable */
+                margin-top: 100px; /* reduce spacing when navbar shrinks on small screens */
             }
-            
-            /* Adjusting existing p max-width */
-            p {
-                max-width: 600px;
-                line-height: 1.6; /* Improves readability */
-            }
+        }
 
-            /* Adjusting h3 spacing */
-            h3 {
-                margin-top: 30px;
-                font-style: italic;
-            }
-
-            h1 {
-                font-family: 'Great Vibes', cursive;
-            }
-
-        </style>
+    </style>
     </head>
     <body>
 
