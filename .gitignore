@@ -1,3 +1,4 @@
 ./flask_app/__pycache__
 environment/
 wvenv/
+.env
