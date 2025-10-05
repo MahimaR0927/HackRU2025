@@ -1,193 +1,230 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Product Name - My Wardrobe</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    </head>
+  <title>Product Name - My Wardrobe</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 
 <body>
 
-    <div class="menu-board">
-        <nav>
-            <ul>
-                <li> 
-                    <a href="{{ url_for('index')}}">Home</a>
-                </li>
-                <li> 
-                    <a href="{{ url_for('wardrobe')}}">My Wardrobe</a>
-                </li>
-                <li> 
-                    <a href="outfits.html">My Outfits</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
 
-    <div class="content-container">
+  <div class="menu-board">
+      <nav>
+          <ul>
+              <li>
+                  <a href="{{ url_for('index')}}">Home</a>
+              </li>
+              <li>
+                  <a href="{{ url_for('wardrobe')}}">My Wardrobe</a>
+              </li>
+              <li>
+                  <a href="outfits.html">My Outfits</a>
+              </li>
+          </ul>
+      </nav>
+  </div>
 
-        <h2>Add Items to Wardrobe</h2>
 
-        <form action="{{ url_for('wardrobe')}}" method = "post" enctype="multipart/form-data" id = "uploadForm" class="input-area">
-            <button name = "uploadButton" type = "submit" id="uploadButton">Upload Items</button>
-            <label for="clothing-file" style="font-weight: bold;" >Choose image(s) to add:</label>
-            <input type="file" id="clothing-file" accept="image/*" name = "clothing-file" multiple>
-        </form>
 
-        <h3>Items to Upload (Preview):</h3>
-        <div id="previewContainer" style="display: flex; flex-wrap: wrap; gap: 20px;">
-            </div>
-        
-        <h3>Your Items (From Database):</h3>
-        <div id="databaseItems" style="display: flex; flex-wrap: wrap; gap: 20px;">
-            {% for img in imgs %}
-            <div class="clothing-preview-item" style="text-align: center;">
-                <p style="font-size: small; max-width: 150px; overflow-wrap: break-word;">{{ img.img_path }}</p>
-                <span style="font-weight: bold; display: block;">Tag: {{ img.tags }}</span>
-            </div>
-            {% endfor %}
 
-                {% for item in imgs %}
-                    <img class = "clothing-preview" src = "{{ url_for('static', filename= '/images/' + item.img_path) }}">
-                    <ul>
-                        {% for x in item.tags %}
-                            <li>{{ x }}</li>
+  <div class="content-container">
 
-                        {% endfor %}
-                    </ul>
-                {% endfor %}
-        </div>
 
-    </div>
 
+
+      <h2>Add Items to Wardrobe</h2>
+
+
+
+
+      <form action="{{ url_for('wardrobe')}}" method = "post" enctype="multipart/form-data" id = "uploadForm" class="input-area">
+          <button name = "uploadButton" type = "submit" id="uploadButton">Upload Items</button>
+          <label for="clothing-file" style="font-weight: bold;" >Choose image(s) to add:</label>
+          <input type="file" id="clothing-file" accept="image/*" name = "clothing-file" multiple>
+      </form>
+
+
+
+
+      <h3>Items to Upload (Preview):</h3>
+      <div id="previewContainer" style="display: flex; flex-wrap: wrap; gap: 20px;">
+          </div>
+    
+      <h3>Your Items (From Database):</h3>
+
+          {% for item in imgs %}
+              <div class="clothing-preview-item">
+                  <img class = "clothing-preview" src = "{{ url_for('static', filename= '/images/' + item.img_path) }}" alt="" width="150" height="150" style="object-fit: cover;">
+                  <p style="font-weight: bold; display: block; margin-top: 5px;">
+                      Tags: {{ item.tags|join(', ') }}
+                  </p>
+              </div>
+          {% endfor %}
+      </div>
+
+
+
+
+  </div>
 
 
 <script>
 
 
-// ... (The JavaScript code remains the same, but it's not shown here for brevity) ...
 let allItems = [];
 
-function handleFileUpload(event) {
-    event.preventDefault(); 
-    const fileInput = document.getElementById('clothing-file');
-    const newImages = fileInput.files;
 
-    if (newImages.length === 0) return;
+// --- 1. Handle File Selection and Tag Prompting ---
+function handleFileSelect(event) {
+   const fileInput = document.getElementById('clothing-file');
+   const newImages = fileInput.files;
 
-    for (let i = 0; i < newImages.length; i++) {
-        const file = newImages[i];
-        // Prompt the user for a tag immediately after selection
-        const tag = prompt(`Enter a tag for the image: ${file.name}`, 'casual');
-        
-        if (tag === null) continue; // User cancelled
 
-        allItems.push({
-            file: file,
-            tag: tag.trim() || 'No Tag'
-        });
-    }
+   if (newImages.length === 0) return;
+  
+   // Clear the previous selection and prepare for new files
+   allItems = [];
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "{{ url_for('wardrobe')}}", true);
-    
-    // Clear the file input so the user can select more files if needed
-    fileInput.value = ''; 
-    redrawPreviews();
 
+   for (let i = 0; i < newImages.length; i++) {
+       const file = newImages[i];
+      
+       // Prompt the user for a tag
+       //const tag = prompt(`Enter a comma-separated tag(s) for the image: ${file.name}`, 'casual, top');
+      
+       //if (tag === null) continue; // User cancelled
+
+
+       allItems.push({
+           file: file,
+           //tag: tag.trim() || 'No Tag' // Use the raw string from the prompt
+           tag: null
+       });
+   }
+
+
+   // Clear the file input element's value
+   fileInput.value = '';
+
+
+   // Rerender the preview area
+   redrawPreviews();
 }
 
-// Function to render the temporary items in the preview area
+
+// --- 2. Render Temporary Previews ---
 function redrawPreviews() {
-    const previewContainer = document.getElementById("previewContainer");
-    previewContainer.innerHTML = ''; 
+   const previewContainer = document.getElementById("previewContainer");
+   previewContainer.innerHTML = '';
 
-    allItems.forEach(item => {
-        const file = item.file;
-        const tag = item.tag;
 
-        const itemWrapper = document.createElement('div');
-        itemWrapper.className = 'clothing-preview-item';
-        itemWrapper.style.textAlign = 'center';
-        
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const newImage = document.createElement('img');
-            newImage.src = e.target.result;
-            newImage.width = 150; 
-            newImage.height = 150;
-            newImage.style.objectFit = 'cover'; 
-            newImage.style.display = 'block';
-            newImage.className = 'clothing-preview';
+   allItems.forEach(item => {
+       const file = item.file;
+       const tag = item.tag;
 
-            const tagElement = document.createElement('span');
-            tagElement.innerText = "Tag: " + tag;
-            tagElement.style.fontWeight = 'bold';
-            tagElement.style.display = 'block';
-            tagElement.style.marginTop = '5px'; 
 
-            itemWrapper.appendChild(newImage);
-            itemWrapper.appendChild(tagElement);
-            
-            previewContainer.appendChild(itemWrapper);
-        }
+       const itemWrapper = document.createElement('div');
+       itemWrapper.className = 'clothing-preview-item';
+       itemWrapper.style.textAlign = 'center';
+      
+       const reader = new FileReader();
+       reader.onload = function(e) {
+           const newImage = document.createElement('img');
+           newImage.src = e.target.result;
+           newImage.width = 150;
+           newImage.height = 150;
+           newImage.style.objectFit = 'cover';
+           newImage.style.display = 'block';
+           newImage.className = 'clothing-preview';
 
-        reader.readAsDataURL(file);
 
-    });
+           const tagElement = document.createElement('span');
+           tagElement.innerText = "Tag(s): " + tag;
+           tagElement.style.fontWeight = 'bold';
+           tagElement.style.display = 'block';
+           tagElement.style.marginTop = '5px';
+
+
+           itemWrapper.appendChild(newImage);
+           itemWrapper.appendChild(tagElement);
+          
+           previewContainer.appendChild(itemWrapper);
+       }
+
+
+       reader.readAsDataURL(file);
+   });
 }
 
 
-// *** CRITICAL NEW FUNCTION: Sends the files and tags to the Flask server ***
+// --- 3. Handle Upload (Sends data to Flask) ---
 async function handleFileUpload(event) {
-    event.preventDefault(); 
-    
-    if (allItems.length === 0) {
-        alert("Please select item(s) to upload first.");
-        return;
-    }
+   event.preventDefault();
+  
+   // Check for selected items
+   if (allItems.length === 0) {
+       alert("Please select item(s) to upload first.");
+       return;
+   }
 
-    const uploadButton = document.getElementById('uploadButton');
-    uploadButton.disabled = true;
-    uploadButton.innerText = 'Uploading...';
 
-    const formData = new FormData();
-    
-    // Package all files and their corresponding tags into the FormData object
-    allItems.forEach((item, index) => {
-        formData.append('clothing_file', item.file);
-        // Tags are indexed (tag_0, tag_1, etc.) for the server to match them to the correct file
-        formData.append('tag_' + index, item.tag); 
-    });
+   const uploadButton = document.getElementById('uploadButton');
+   uploadButton.disabled = true;
+   uploadButton.innerText = 'Uploading...';
 
-    try {
-        const response = await fetch('{{ url_for("wardrobe")}}', { 
-            method: 'POST',
-            body: formData // Sends the files and tags
-        });
 
-        if (response.ok) {
-            alert('Upload successful! Items saved to desktop and database.');
-            // Clear items and refresh the page to show the new items from the DB
-            allItems = []; 
-            window.location.reload(); 
-        } else {
-            const errorData = await response.json();
-            alert(`Upload failed: ${errorData.error || response.statusText}`);
-        }
-    } catch (error) {
-        console.error('Network or server error:', error);
-        alert('An error occurred during upload. Check console for details.');
-    } finally {
-        uploadButton.disabled = false;
-        uploadButton.innerText = 'Upload Items';
-    }
+   const formData = new FormData();
+  
+   // Package all files and their corresponding tags
+   allItems.forEach((item, index) => {
+       // Must match Flask's expected keys: 'clothing_file' and 'tag_X'
+       formData.append('clothing_file', item.file);
+       formData.append('tag_' + index, item.tag);
+   });
+
+
+   try {
+       const response = await fetch('{{ url_for("wardrobe")}}', {
+           method: 'POST',
+           body: formData
+       });
+
+
+       if (response.ok) {
+           alert('Upload successful!');
+           // Clear items and refresh the page to show new items from DB
+           allItems = [];
+           window.location.reload();
+       } else {
+           const errorText = await response.text();
+           try {
+                const errorData = JSON.parse(errorText);
+                alert(`Upload failed: ${errorData.error || response.statusText}`);
+           } catch {
+                alert(`Upload failed: ${response.statusText}. Server message: ${errorText.substring(0, 100)}...`);
+           }
+       }
+   } catch (error) {
+       console.error('Network or server error:', error);
+       alert('An error occurred during upload. Check console for details.');
+   } finally {
+       uploadButton.disabled = false;
+       uploadButton.innerText = 'Upload Items';
+   }
 }
 
-// Attach event listeners
+
+
+
+// --- 4. Attach Event Listeners ---
 document.getElementById('clothing-file').addEventListener('change', handleFileSelect);
 document.getElementById('uploadForm').addEventListener('submit', handleFileUpload);
 
+
 </script>
+
+
+
 
 </body>
 </html>

@@ -146,10 +146,13 @@ h3 {
     width: 150px;
     height: 150px;
     object-fit: cover;
+<<<<<<< HEAD
     display: block;
     
     border: 2px solid #ddd;
     border-radius: 8px;
     padding: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+=======
+>>>>>>> 809623b51647a7fbb8c831bc221e17d13b46329e
 }
