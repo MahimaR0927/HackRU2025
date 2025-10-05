@@ -20,7 +20,7 @@ def wardrobe():
             if 'clothing-file' not in request.files:
                 print('No file part')
 
-            UPLOAD_FOLDER = 'templates/src/images' # Replace with your desired path
+            UPLOAD_FOLDER = 'templates/static/images' # Replace with your desired path
             app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
             file = request.files['clothing-file']
@@ -38,6 +38,7 @@ def wardrobe():
                 
                 # Now you have the file and its path on the server
                 print(f'File uploaded successfully to: {file_path_on_server}')
+
                 imgs.append(clothingPiece(filename, main.generate_tags(file_path_on_server)))
                 print(imgs[-1])
 
