@@ -20,6 +20,34 @@ def wardrobe():
             new_tags = main.generate_tags(img_path)
             imgs.append(clothingPiece(img_path, new_tags))
 
+<<<<<<< HEAD
+=======
+            if 'clothing-file' not in request.files:
+                print('No file part')
+
+            UPLOAD_FOLDER = 'templates/src/images' # Replace with your desired path
+            app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+            file = request.files['clothing-file']
+
+            # If the user does not select a file, the browser submits an empty file without a filename.
+            if file.filename == '':
+                print('No selected file')
+
+            if file:
+                filename = file.filename
+                
+                # This is the key step: Save the image data to your server's file system
+                file_path_on_server = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(file_path_on_server)
+                
+                # Now you have the file and its path on the server
+                print(f'File uploaded successfully to: {file_path_on_server}')
+                imgs.append(clothingPiece(filename, main.generate_tags(file_path_on_server)))
+                print(imgs[-1])
+
+        
+>>>>>>> c7b405f6dde5a48ba759e14e0c99f09236e19b30
     except Exception as e:
         error = "Error:" + str(e)
         imgs = []
@@ -32,4 +60,10 @@ class clothingPiece:
         self.img_path = args[0]
         self.tags = args[1]
 
+<<<<<<< HEAD
+=======
+    def __str__(self):
+        return self.img_path + ":" + " ".join(self.tags)
+
+>>>>>>> c7b405f6dde5a48ba759e14e0c99f09236e19b30
     

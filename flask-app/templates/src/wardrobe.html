@@ -27,8 +27,8 @@
 
         <h2>Add Items to Wardrobe</h2>
 
-        <form id = "uploadForm" class="input-area" name = "uploadForm">
-            <button type = "submit" id="uploadButton" name = "uploadButton">Upload Items</button>
+        <form action="{{ url_for('wardrobe')}}" method = "post" enctype="multipart/form-data" id = "uploadForm" class="input-area">
+            <button name = "uploadButton" type = "submit" id="uploadButton">Upload Items</button>
             <label for="clothing-file" style="font-weight: bold;" >Choose image(s) to add:</label>
             <input type="file" id="clothing-file" accept="image/*" name = "clothing-file" multiple>
         </form>
@@ -45,16 +45,22 @@
                 <span style="font-weight: bold; display: block;">Tag: {{ img.tags }}</span>
             </div>
             {% endfor %}
+
+                {% for item in imgs %}
+                    <img src = "images/ {{item.img_path.split(' ')}} ">
+                {% endfor %}
         </div>
 
     </div>
 
+
+
 <script>
-// This array will temporarily hold the files and their tags before upload
+// ... (The JavaScript code remains the same, but it's not shown here for brevity) ...
 let allItems = [];
 
-// Function to handle the initial file selection and tagging prompt
-function handleFileSelect() {
+function handleFileUpload(event) {
+    event.preventDefault(); 
     const fileInput = document.getElementById('clothing-file');
     const newImages = fileInput.files;
 
@@ -72,10 +78,14 @@ function handleFileSelect() {
             tag: tag.trim() || 'No Tag'
         });
     }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "{{ url_for('wardrobe')}}", true);
     
     // Clear the file input so the user can select more files if needed
     fileInput.value = ''; 
     redrawPreviews();
+
 }
 
 // Function to render the temporary items in the preview area
@@ -114,6 +124,7 @@ function redrawPreviews() {
         }
 
         reader.readAsDataURL(file);
+
     });
 }
 
@@ -167,6 +178,8 @@ async function handleFileUpload(event) {
 // Attach event listeners
 document.getElementById('clothing-file').addEventListener('change', handleFileSelect);
 document.getElementById('uploadForm').addEventListener('submit', handleFileUpload);
+
+*/
 </script>
 
 </body>
